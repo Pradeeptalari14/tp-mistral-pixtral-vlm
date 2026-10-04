@@ -47,6 +47,21 @@ flowchart TD
 
 ---
 
+## 💻 Infrastructure & Software Technology Stack
+
+| Layer | Technology & Tools | Production Role |
+|---|---|---|
+| **GPU Compute & Hardware** | NVIDIA L4 (24GB), RTX 4090, A100 (40GB/80GB) | Dedicated hardware acceleration for FP8 GEMMs and vision patch convolution |
+| **Serving Runtime Engine** | vLLM v0.6.3+ (Multimodal PagedAttention) | High-throughput distributed inference, KV cache paging, and continuous batching |
+| **Alternative Inference Router** | SGLang RadixAttention | Prefix caching across multi-image prompts and dynamic visual KV memory |
+| **Foundation Model** | `mistralai/Pixtral-12B-2409` | 12B autoregressive text decoder paired with a native 400M ViT vision encoder |
+| **Image Preprocessor & Tokenizer**| Custom Dynamic 2D Convolution (16x16 patch) | Aspect-ratio preserving patch tokenization without square distortion |
+| **Container & Orchestration** | Kubernetes 1.30+, NVIDIA GPU Operator, Docker | GPU-aware pod scheduling, horizontal autoscaling, health/readiness probing |
+| **Structured Output Decoding** | Outlines / Guided Decoding Engine | Enforced JSON schema generation for invoices, receipts, and technical bills of materials |
+| **API Protocol & Interface** | OpenAI-Compatible API (`/v1/chat/completions`) | Drop-in multimodal client compatibility with official OpenAI SDKs |
+
+---
+
 ## 🚀 Key Capabilities
 
 1. **Native Dynamic Aspect Ratio**: Unlike ViT-based architectures that force square crops (e.g., 224x224, 336x336), Pixtral calculates 16x16 patch embeddings natively across arbitrary aspect ratios without spatial distortion.
