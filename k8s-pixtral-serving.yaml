@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pixtral-12b-serving
+  labels:
+    app.kubernetes.io/name: pixtral-12b-serving
+    app.kubernetes.io/part-of: vision-language-platform
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pixtral-12b-serving
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pixtral-12b-serving
+    spec:
+      containers:
+        - name: pixtral-vllm
+          image: ghcr.io/pradeeptalari14/tp-mistral-pixtral-vlm:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MODEL_NAME
+              value: "mistralai/Pixtral-12B-2409"
+            - name: QUANTIZATION
+              value: "fp8"
+            - name: HUGGING_FACE_HUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: hf-token-secret
+                  key: token
+          ports:
+            - containerPort: 8000
+              name: http
+          resources:
+            requests:
+              cpu: "8"
+              memory: "32Gi"
+              nvidia.com/gpu: "1"
+            limits:
+              cpu: "16"
+              memory: "48Gi"
+              nvidia.com/gpu: "1"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 45
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 15
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pixtral-12b-service
+  labels:
+    app.kubernetes.io/name: pixtral-12b-serving
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+      targetPort: 8000
+      name: http
+  selector:
+    app.kubernetes.io/name: pixtral-12b-serving
