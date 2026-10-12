@@ -1,3 +1,6 @@
+[![Ecosystem](https://img.shields.io/badge/Portfolio%20Ecosystem-341%20Studios-6366f1.svg)](https://pradeeptalari.me/projects/)
+[![Architecture DAG](https://img.shields.io/badge/Architecture-DAG%20%26%20Course-10b981.svg)](https://pradeeptalari.me/tools/repo-learning/)
+
 # Mistral Pixtral 12B High-Throughput Serving Runtime (`tp-mistral-pixtral-vlm`)
 
 [![CI](https://github.com/Pradeeptalari14/tp-mistral-pixtral-vlm/actions/workflows/pixtral-ci.yml/badge.svg)](https://github.com/Pradeeptalari14/tp-mistral-pixtral-vlm/actions)
@@ -129,3 +132,6 @@ print(response.choices[0].message.content)
 ## 📄 License & Security
 
 This project is licensed under the MIT License. See [LICENSE](LICENSE) and [SECURITY.md](SECURITY.md) for details.
+
+---
+*Synchronized with [Mistral Pixtral 12B VLM Studio Studio](https://pradeeptalari.me/tools/mistral-pixtral-vlm/) & [Repository Learning DAG](https://pradeeptalari.me/tools/repo-learning/) — [Talari Pradeep Portfolio](https://pradeeptalari.me)*
